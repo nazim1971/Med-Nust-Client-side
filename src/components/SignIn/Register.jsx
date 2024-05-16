@@ -69,106 +69,80 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <div style={{backgroundImage: "url(https://i.ibb.co/MGbq5WN/art.jpg)"}} className="hero min-h-screen  my-20">
+    <div className="my-20">
+           <div className="flex w-full border my-20 max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg  lg:max-w-4xl">
+          
       
-        <div className="hero-content  flex-col ">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Hello!</h1>
-          <h1 className="font-semibold text-3xl">Register to Get Started</h1>
-        </div>
-          <div className="card shrink-0 w-full p-3 max-w-sm shadow-2xl bg-base-100 ">
-            
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Name</span>
-                </label>
-                <input
-                  {...register("name", { required: true })}
-                  type="text"
-                  placeholder="Your Full Name"
-                  className="input border-green-500 input-bordered"
-                />
-                {errors.name && (
-                  <span className="text-red-600 text-center font-semibold p-1">
-                    Name is required
-                  </span>
-                )}
+          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+              <div className="flex justify-center mx-auto">
+                  <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/GJg1fYZ/Brain-boost-removebg-preview.png" alt="" />
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  {...register("email", { required: true })}
-                  type="email"
-                  placeholder="email"
-                  className="input border-green-500 input-bordered"
-                />
-                {errors.email && (
-                  <span className="text-red-600 text-center font-semibold p-1">
-                    Email is required
-                  </span>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Photo</span>
-                </label>
-                <input
-                  {...register("photo", { required: true })}
-                  type="text"
-                  placeholder="Photo Url"
-                  className="input border-green-500 input-bordered"
-                />
-                {errors.photo && (
-                  <span className="text-red-600 text-center font-semibold p-1">
-                    Photo Url is required
-                  </span>
-                )}
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <div className="flex  items-center gap-2">
+      
+              <p className="mt-3 text-xl text-center ">
+              Register to Get Started
+              </p>
+              <form  onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-4">
+                  <label className="block mb-2 text-sm font-medium " >Name</label>
                   <input
-                    {...register("password", { required: true })}
-                    type={pass ? "text" : "password"}
-                    placeholder="Enter password"
-                    className="input border-green-500 input-bordered"
-                  />
-
-                  <a onClick={() => setPass(!pass)} className="">
-                    {pass ? <FaRegEye /> : <FaRegEyeSlash />}
+                  {...register("name",{required: true})}
+                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="text" />
+              </div>
+              <div className="mt-4">
+                  <label className="block mb-2 text-sm font-medium " >Email Address</label>
+                  <input
+                  {...register("email",{required: true})}
+                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="email" />
+              </div>
+              <div className="mt-4">
+                  <label className="block mb-2 text-sm font-medium " >Photo</label>
+                  <input
+                  placeholder="Photo Url"
+                  {...register("photo",{required: true})}
+                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="url" />
+              </div>
+      
+              <div className="mt-4">
+                  <div className="flex justify-between">
+                      <label className="block mb-2 text-sm font-medium " >Password</label>
+                      <a href="#" className="text-xs  hover:underline">Forget Password?</a>
+                  </div>
+      
+                  <div >
+                 <div className="flex items-center gap-5">
+                 <input 
+                   {...register("password",{required: true})}
+                   className="block w-full px-4 py-2  border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" 
+                  type={pass ? "text" : "password"} />
+                  
+                   <a onClick={() => setPass(!pass)} >
+                    {pass ? <FaRegEye className="" /> : <FaRegEyeSlash />}
                   </a>
-                </div>
-                  {errors.password && (
+                 </div>
+                 {errors.password && (
                   <span className="text-red-600 text-center font-semibold p-1">
                     {errors.password.message}{" "}
                   </span>
                 )}
-                <label className="label">
-                  <a href="#" className="label-text-alt text-green-500 link link-hover">
-                    Forgot password?
-                  </a>
-                </label>
+                  </div>
               </div>
-              <div className="form-control mt-3">
-                <button className="btn bg-green-500 text-white">Register</button>
+      
+              <div className="mt-6">
+                  <button type="submit" className="w-full btn btn-primary px-6 py-3 text-sm font-medium tracking-wide  capitalize transition-colors duration-300 transform  rounded-lg  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+                      Register
+                  </button>
               </div>
-            </form>
-            <div className="text-center mb-3">
-              <p>
-                Already have an account?{" "}
-                <Link className="text-green-500" to="/login">
-                  Login
-                </Link>{" "}
-              </p>
-            </div>
+              </form>
+      
+              <div className="flex items-center justify-between mt-4">
+                  <span className="w-1/5 border-b  md:w-1/4"></span>
+      
+                  <Link to='/login' className="text-xs  uppercase  hover:underline text-rose-500">or sign in</Link>
+      
+                  <span className="w-1/5 border-b md:w-1/4"></span>
+              </div>
           </div>
-        </div>
+          <div className="hidden bg-cover lg:block lg:w-1/2" style={{backgroundImage: 'url(https://i.ibb.co/F4SRb4t/sign-up.jpg)'}} ></div>
       </div>
       <ToastContainer />
     </div>
