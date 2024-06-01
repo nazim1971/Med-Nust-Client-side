@@ -9,6 +9,7 @@ import AddProduct from "../Pages/Home/Navber/AddProduct";
 import Private from "./Private";
 import ViewPrivate from "../Pages/Home/ViewPrivate";
 import UpdateProfile from "../Pages/Home/UpdateProfile/UpdateProfile";
+import CategoryDate from "../Pages/Home/CategoryData/CategoryDate";
 
 const routes = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
        {
         path: '/updateProfile',
         element: <UpdateProfile/>
+       },
+       {
+        path: '/categoryData/:cat',
+        element: <CategoryDate/>
        }
       ]
     },
