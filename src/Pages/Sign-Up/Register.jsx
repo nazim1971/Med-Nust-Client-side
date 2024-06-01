@@ -1,14 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-import { AuthContext } from "../Provider/AuthProvider";
+import useAuth from "../../Hooks/useAuth";
 
 const Register = () => {
 
-  const { createUser,updateUserProfile } = useContext(AuthContext);
+  const { createUser,updateUserProfile } = useAuth();
 // show password
     const [pass, setPass] = useState(false);
     const location = useLocation();

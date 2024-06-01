@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "../components/Root/Root";
-import Home from "../components/Home/Home";
-import Contect from "../components/Navber/Contect";
-import About from "../components/Navber/About";
-import Login from "../components/SignIn/Login";
-import Register from "../components/SignIn/Register";
-import AddProduct from "../components/Navber/AddProduct";
-import ViewPrivate from "../components/Home/ViewPrivate";
-import Private from "../components/PrivateRoute/Private";
+import Root from "../Root/Root";
+import Home from "../Pages/Home/Home";
+import Contect from "../Pages/Home/Navber/Contect";
+import About from "../Pages/Home/Navber/About";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Sign-Up/Register";
+import AddProduct from "../Pages/Home/Navber/AddProduct";
+import Private from "./Private";
+import ViewPrivate from "../Pages/Home/ViewPrivate";
+import UpdateProfile from "../Pages/Home/UpdateProfile/UpdateProfile";
 
 const routes = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const routes = createBrowserRouter([
        {
         path: '/viewPrivate',
         element: <Private><ViewPrivate/></Private>
+       },
+       {
+        path: '/updateProfile',
+        element: <UpdateProfile/>
        }
       ]
     },

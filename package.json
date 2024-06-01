@@ -22,7 +22,8 @@
     "react-simple-typewriter": "^5.0.1",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.26.4",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "swiper": "^11.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
