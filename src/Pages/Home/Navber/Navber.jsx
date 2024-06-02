@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import "animate.css";
 import useAuth from "../../../Hooks/useAuth";
@@ -26,11 +25,11 @@ const Navber = () => {
       </li>
       <li>
         {" "}
-        <NavLink to="/about"> Shop </NavLink>{" "}
+        <NavLink to="/shop"> Shop </NavLink>{" "}
       </li>
       <li>
         {" "}
-        <NavLink to="/contect" > <BiCartAdd className="text-xl" /> </NavLink>{" "}
+        <NavLink to="/cart" > <BiCartAdd className="text-xl" /> </NavLink>{" "}
       </li>
       <li>
           <NavLink to="/addProduct">languages </NavLink>
@@ -164,6 +163,9 @@ const Navber = () => {
                 </ul>
               </div>
             </div>
+
+
+
           ) : (
             <div className="flex gap-2">
               <div className="dropdown dropdown-bottom dropdown-end">
@@ -195,3 +197,6 @@ const Navber = () => {
 };
 
 export default Navber;
+
+
+

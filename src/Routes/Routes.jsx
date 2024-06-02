@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root/Root";
 import Home from "../Pages/Home/Home";
-import Contect from "../Pages/Home/Navber/Contect";
-import About from "../Pages/Home/Navber/About";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Sign-Up/Register";
 import AddProduct from "../Pages/Home/Navber/AddProduct";
@@ -10,6 +8,9 @@ import Private from "./Private";
 import ViewPrivate from "../Pages/Home/ViewPrivate";
 import UpdateProfile from "../Pages/Home/UpdateProfile/UpdateProfile";
 import CategoryDate from "../Pages/Home/CategoryData/CategoryDate";
+import Shop from "../Pages/Shop/Shop";
+import Cart from "../Pages/Cart/Cart";
+import CheackOut from "../Pages/CheckOut/CheackOut";
 
 const routes = createBrowserRouter([
     {
@@ -21,12 +22,12 @@ const routes = createBrowserRouter([
           element: <Home/>
         },
        {
-        path: '/contect',
-        element: <Contect/>
+        path: '/cart',
+        element: <Cart/>
        },
        {
-        path: '/about',
-        element: <About/>
+        path: '/shop',
+        element: <Shop/>
        },
        {
         path: '/login',
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
        {
         path: '/categoryData/:cat',
         element: <CategoryDate/>
+       },
+       {
+        path: '/checkOut',
+        element: <CheackOut/>
        }
       ]
     },
