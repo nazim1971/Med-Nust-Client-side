@@ -5,10 +5,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import useAuth from "../../Hooks/useAuth";
+import { imageUpload } from "../../Hooks";
+import { TbFidgetSpinner } from "react-icons/tb";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Register = () => {
-
-  const { createUser,updateUserProfile } = useAuth();
+  const axiosPublic = useAxiosPublic()
+  const { createUser,updateUserProfile,loading,setLoader } = useAuth();
 // show password
     const [pass, setPass] = useState(false);
     const location = useLocation();
@@ -18,12 +21,13 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError
+    setError, reset
   } = useForm()
-  const onSubmit = (data) => {
-    const {email,password,name,photo} = data
+  const onSubmit =async (data) => {
+   const image = data.image[0]
+    const {email,password,name,role} = data
 
-
+    console.log(data);
     // password validation
     if (password.length < 6) {
       setError("password", {
@@ -48,23 +52,55 @@ const Register = () => {
     return
   }
     
-    // create user
-    createUser(email,password)
-    .then(() => {
-        toast.success("Account create Successfully");
-        // create user profile
-        updateUserProfile(name, photo).then(() => {
-          navigate(location?.state ? location.state : "/");
-        });
-      }).catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          toast.warning("This Email Already Used");
-        } else {
+    // // create user
+    // createUser(email,password)
+    // .then(() => {
+    //     toast.success("Account create Successfully");
+    //     // create user profile
+    //     updateUserProfile(name, image).then(() => {
+          
+    //     });
+    //   }).catch((error) => {
+    //     if (error.code === "auth/email-already-in-use") {
+    //       toast.warning("This Email Already Used");
+    //     } else {
 
-          toast.error("An error occurred");
-        }
-      });
-
+    //       toast.error("An error occurred");
+    //     }
+    //   });
+      try {
+        setLoader(true)
+        // 1. Upload image and get image url
+        const image_url = await imageUpload(image)
+        console.log(image_url)
+        //2. User Registration
+        const result = await createUser(email, password)
+        console.log(result)
+        // 3. Save username and photo in firebase
+        await updateUserProfile(name, image_url)
+        .then(()=>{
+          // create user entry in the DB
+          const userInfo = {
+            name: name,
+            email: email,
+            role: role
+          }
+          axiosPublic.post('/users',userInfo)
+          .then(res=>{
+            if (res.data.insertedId) {
+              console.log('user added to the database')
+              reset();
+              toast.success('Signup Successful')
+              navigate(location?.state ? location.state : "/");
+          }
+          })
+        })
+        
+        
+      } catch (err) {
+        console.log(err)
+        toast.error(err.message)
+      }
 
   }
 
@@ -95,11 +131,13 @@ const Register = () => {
                    className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="email" />
               </div>
               <div className="mt-4">
-                  <label className="block mb-2 text-sm font-medium " >Photo</label>
+                  <label className="block mb-2 text-sm font-medium " >Select Image</label>
                   <input
                   placeholder="Photo Url"
-                  {...register("photo",{required: true})}
-                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="url" />
+                  {...register("image",{required: true})}
+                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="file" 
+                   accept="image/*"
+                   />
               </div>
       
               <div className="mt-4">
@@ -126,10 +164,22 @@ const Register = () => {
                 )}
                   </div>
               </div>
+              <div className="mt-4">
+              <label className="block mb-2 text-sm font-medium " >Select role</label>
+              <select defaultValue={""} {...register("role",{required: true})} >
+              <option  value="" disabled>Select a role</option>
+                <option value="user">User</option>
+                <option value="seller">Seller</option>
+              </select>
+              </div>
       
               <div className="mt-6">
                   <button type="submit" className="w-full btn btn-primary px-6 py-3 text-sm font-medium tracking-wide  capitalize transition-colors duration-300 transform  rounded-lg  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                      Register
+                      {
+                        loading ? <TbFidgetSpinner className="animate-spin m-auto" />
+                        :
+                        'Continue'
+                      }
                   </button>
               </div>
               </form>

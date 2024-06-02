@@ -93,10 +93,10 @@ const Navber = () => {
               src="https://i.ibb.co/Z88qpcZ/MED-NUST-removebg-preview.png"
               alt="website-logo"
             />{" "}
-            <a>
+            <span>
               Med
               <span className="text-orange-400">-Nust</span>
-            </a>
+            </span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -170,9 +170,9 @@ const Navber = () => {
                 <div tabIndex={0} role="button" className="btn m-1">
                   Join Us
                 </div>
-                <ul
+                <ul 
                   tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                  className="dropdown-content z-[100] menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
                     <Link to="/login" className="font-semibold">

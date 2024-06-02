@@ -3,15 +3,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import {  FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const Login = () => {
 
-
-
-   
+  const axiosPublic = useAxiosPublic();
   const { login ,googleLogin} = useAuth() ;
   
   // show password
@@ -43,10 +42,21 @@ const onSubmit = (data) => {
 // google
 const handleGoogleLogin = () => {
   googleLogin()
-    .then(() => {
-      toast.success("Login Successfully");
-      navigate(location?.state ? location.state : "/");
+  .then(result =>{
+    console.log(result.user);
+    const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+        role: 'user'
+        
+    }
+    axiosPublic.post('/users', userInfo)
+    .then(res =>{
+        console.log(res.data);
+        toast.success("Login Successfully");
+        navigate(location?.state ? location.state : "/");
     })
+})
     .catch();
 };
 
