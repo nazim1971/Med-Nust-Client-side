@@ -107,7 +107,7 @@ const CheackOut = () => {
                     // cartIds: cart.map(item => item._id),
                     // itemsCount: cart.map(item => item.count),
                     cartInfo: combinedCartInfo,
-                    status: 'pending'
+                    status: 'success'
                 }
 
                 const res = await axiosPublic.post('/payments', payment);
@@ -121,7 +121,7 @@ const CheackOut = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
-                  //  navigate('/paymentHistory')
+                   navigate('/invoice')
                 }
 
             }

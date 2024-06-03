@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-
 const Invoice = () => {
     const {user}  = useAuth()
     const axiosSecure = useAxiosSecure()
@@ -18,9 +17,12 @@ const Invoice = () => {
         },
       });
 
+
+
     return (
         <div>
           payment: {payment.length}
+         
         </div>
     );
 };

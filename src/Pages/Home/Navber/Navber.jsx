@@ -27,10 +27,12 @@ const Navber = () => {
         {" "}
         <NavLink to="/shop"> Shop </NavLink>{" "}
       </li>
-      <li>
-        {" "}
-        <NavLink to="/cart" > <BiCartAdd className="text-xl" /> </NavLink>{" "}
-      </li>
+     {
+      user &&  <li>
+      {" "}
+      <NavLink to="/cart" > <BiCartAdd className="text-xl" /> </NavLink>{" "}
+    </li>
+     }
       <li>
           <NavLink to="/addProduct">languages </NavLink>
         </li>
@@ -153,7 +155,7 @@ const Navber = () => {
                     <NavLink to='/updateProfile' >Update Profile</NavLink>
                   </li>
                   <li>
-                    <a>Dashboard</a>
+                    <Link to='/dashboard' >Dashboard</Link>
                   </li>
                   <li>
                     <button onClick={handleSignOut} className=" text-red-500">
