@@ -11,6 +11,8 @@ import CategoryDate from "../Pages/Home/CategoryData/CategoryDate";
 import Shop from "../Pages/Shop/Shop";
 import Cart from "../Pages/Cart/Cart";
 import CheackOut from "../Pages/CheckOut/CheackOut";
+import Payment from "../Pages/CheckOut/Payment";
+import Invoice from "../Pages/CheckOut/Invoice";
 
 const routes = createBrowserRouter([
     {
@@ -54,8 +56,12 @@ const routes = createBrowserRouter([
         element: <CategoryDate/>
        },
        {
-        path: '/checkOut',
-        element: <CheackOut/>
+        path: '/payment',
+        element: <Payment/>
+       },
+       {
+        path: '/invoice',
+        element: <Invoice/>
        }
       ]
     },

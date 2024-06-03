@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+
 import LoadingSpinner from "../../components/LoadingSpiner";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Cart = () => {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
   const {
     data: cart = [],
     isLoading,
@@ -15,7 +16,7 @@ const Cart = () => {
   } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
-      const { data } = await axiosPublic(`/userCart/${user.email}`);
+      const { data } = await axiosSecure(`/userCart/${user.email}`);
       return data;
     },
   });
@@ -26,7 +27,7 @@ const Cart = () => {
   // Handle increase item count
   const handleIncrease = async (itemId) => {
     try {
-      await axiosPublic.put(`/cart/increment/${itemId}`);
+      await axiosSecure.put(`/cart/increment/${itemId}`);
       refetch(); // Refresh the cart data
     } catch (error) {
       console.error('Error increasing count:', error);
@@ -36,7 +37,7 @@ const Cart = () => {
   // Handle decrease item count
   const handleDecrease = async (itemId) => {
     try {
-       await axiosPublic.put(`/cart/decrement/${itemId}`);
+       await axiosSecure.put(`/cart/decrement/${itemId}`);
       refetch(); // Refresh the cart data
     } catch (error) {
       console.error('Error decreasing count:', error);
@@ -58,7 +59,7 @@ const Cart = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await axiosPublic.delete(`/deleteOneCart/${itemId}`);
+          const response = await axiosSecure.delete(`/deleteOneCart/${itemId}`);
           console.log("Item deleted successfully:", response.data);
 
           Swal.fire({
@@ -87,7 +88,7 @@ const Cart = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await axiosPublic.delete(
+          const response = await axiosSecure.delete(
             `/deleteAllCart/${user.email}`
           );
           console.log("Item deleted successfully:", response.data);
@@ -111,13 +112,14 @@ const Cart = () => {
         <span className="text-2xl font-semibold bg-red-300 p-2 rounded-xl">
           Total ${totalPrice.toFixed(2)}{" "}
         </span>
-        <Link to='/checkOut' className="btn btn-success ">Check Out</Link>
+        <Link to='/payment' className="btn btn-success ">Check Out</Link>
         <button
           onClick={handleDeleteAll}
           className="btn btn-warning text-white  "
         >
           Delete All
         </button>
+        <Link to='/invoice'>invoice</Link>
       </div>
       <div className="grid grid-cols-3 gap-8 ">
         {cart.map((i) => (
