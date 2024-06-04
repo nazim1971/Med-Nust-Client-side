@@ -26,6 +26,7 @@ import ManageCategory from "../Pages/Dashboard/Admin/ManageCategory";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import PayManagement from "../Pages/Dashboard/Admin/PayManagement";
 import SalesReport from "../Pages/Dashboard/Admin/SalesReport";
+import SellerRoute from "./SellerRoute";
 
 const routes = createBrowserRouter([
     {
@@ -62,7 +63,7 @@ const routes = createBrowserRouter([
        },
        {
         path: '/updateProfile',
-        element: <UpdateProfile/>
+        element: <Private><UpdateProfile/></Private>
        },
        {
         path: '/categoryData/:cat',
@@ -70,7 +71,7 @@ const routes = createBrowserRouter([
        },
        {
         path: '/payment',
-        element: <Payment/>
+        element: <Private><Payment/></Private>
        },
        {
         path: '/invoice',
@@ -85,53 +86,53 @@ const routes = createBrowserRouter([
         // normal user 
         {
           path: 'userHome',
-          element: <UserHome/>
+          element: <Private><UserHome/> </Private>
         },
         {
           path: 'payHistoryUser',
-          element: <PayHistoryUser/>
+          element:  <Private><PayHistoryUser/></Private>
         },
         // seller dashboard
         {
           path: 'sellerHome',
-          element: <SellerHome/>
+          element: <Private><SellerRoute><SellerHome/></SellerRoute> </Private>
         },
         {
           path: 'manageMedicines',
-          element: <ManageMedicines/>
+          element: <Private><SellerRoute><ManageMedicines/></SellerRoute> </Private>
         },
         {
           path: 'askForAd',
-          element: <AskForAd/>
+          element:  <Private><SellerRoute><AskForAd/></SellerRoute> </Private>
         },
         {
           path: 'payHistorySeller',
-          element: <PayHistorySelller/>
+          element:   <Private><SellerRoute><PayHistorySelller/></SellerRoute> </Private>
         },
         //admin routes only
         {
           path: 'adminHome',
-          element: <AdminRoute><AdminHome/></AdminRoute>
+          element: <Private><AdminRoute><AdminHome/></AdminRoute></Private>
         },
         {
           path: 'manageBannerAd',
-          element: <AdminRoute><ManageBannerAd/></AdminRoute>
+          element: <Private><AdminRoute><ManageBannerAd/></AdminRoute></Private>
         },
         {
           path: 'manageCategory',
-          element: <AdminRoute><ManageCategory/></AdminRoute>
+          element: <Private><AdminRoute><ManageCategory/></AdminRoute></Private>
         },
         {
           path: 'manageUsers',
-          element: <AdminRoute><ManageUsers/></AdminRoute>
+          element: <Private><AdminRoute><ManageUsers/></AdminRoute></Private>
         },
         {
           path: 'payManagement',
-          element: <AdminRoute><PayManagement/></AdminRoute>
+          element: <Private><AdminRoute><PayManagement/></AdminRoute></Private>
         },
         {
           path: 'salesReport',
-          element: <AdminRoute><SalesReport/></AdminRoute>
+          element: <Private><AdminRoute><SalesReport/></AdminRoute></Private>
         }
       ]
     }
