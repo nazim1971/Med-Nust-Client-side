@@ -10,12 +10,14 @@ const Dashboard = () => {
 
     return (
         <div className="flex">
+            
             {/* dashboard side bar */}
             <Sidebar/>
             {/* dashboard content */}
             <div className="flex-1 p-8">
                 <Outlet></Outlet>
             </div>
+            
         </div>
     );
 };
