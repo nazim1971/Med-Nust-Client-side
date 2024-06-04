@@ -5,6 +5,7 @@ import useRole from "../../Hooks/isRole";
 import AdminMenu from "./AdminMenu";
 import UserMenu from "./UserMenu";
 import SellerMenu from "./SellerMenu";
+import Swal from "sweetalert2";
 
 
 const Sidebar = () => {
@@ -12,6 +13,27 @@ const Sidebar = () => {
     const [role, isLoading] = useRole()
     console.log(role, isLoading) 
 
+
+    const handleLogout = ()=>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes Logout!!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                logOut()
+              Swal.fire({
+                title: "LogOut!",
+                text: "Your logout.",
+                icon: "success"
+              });
+            }
+          });
+    }
 
     return (
         <div>
@@ -36,7 +58,7 @@ const Sidebar = () => {
                             Cart</NavLink>
                     </li>
                     <li>
-                        <button onClick={logOut} className="btn bg-red-500">LogOut</button>
+                        <button onClick={()=>handleLogout()} className="btn bg-red-500">LogOut</button>
                     </li>
                 </ul>
             </div>

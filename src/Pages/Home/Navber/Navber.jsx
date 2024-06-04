@@ -110,7 +110,7 @@ const Navber = () => {
               <input
                 onChange={handleToggle}
                 type="checkbox"
-                value="synthwave"
+                value="dark"
               />
 
               {/* sun icon */}

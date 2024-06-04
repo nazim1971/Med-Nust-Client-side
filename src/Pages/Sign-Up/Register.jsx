@@ -51,23 +51,7 @@ const Register = () => {
     })
     return
   }
-    
-    // // create user
-    // createUser(email,password)
-    // .then(() => {
-    //     toast.success("Account create Successfully");
-    //     // create user profile
-    //     updateUserProfile(name, image).then(() => {
-          
-    //     });
-    //   }).catch((error) => {
-    //     if (error.code === "auth/email-already-in-use") {
-    //       toast.warning("This Email Already Used");
-    //     } else {
-
-    //       toast.error("An error occurred");
-    //     }
-    //   });
+  
       try {
         setLoader(true)
         // 1. Upload image and get image url
@@ -78,14 +62,15 @@ const Register = () => {
         console.log(result)
         // 3. Save username and photo in firebase
         await updateUserProfile(name, image_url)
-        .then(()=>{
+        .then(async()=>{
           // create user entry in the DB
-          const userInfo = {
+          const  userInfo = {
             name: name,
             email: email,
-            role: role
+            role: role,
+            image: image_url
           }
-          axiosPublic.post('/users',userInfo)
+         await axiosPublic.post('/users',userInfo)
           .then(res=>{
             if (res.data.insertedId) {
               console.log('user added to the database')

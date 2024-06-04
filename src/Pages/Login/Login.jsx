@@ -47,7 +47,8 @@ const handleGoogleLogin = () => {
     const userInfo = {
         email: result.user?.email,
         name: result.user?.displayName,
-        role: 'user'
+        role: 'user',
+        image: result.user.photoURL
         
     }
     axiosPublic.post('/users', userInfo)
