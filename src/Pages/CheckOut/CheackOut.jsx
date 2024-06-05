@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const CheackOut = () => {
@@ -15,7 +15,7 @@ const CheackOut = () => {
     const elements = useElements();
 
     const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();   
+    const axiosSecure = useAxiosSecure()   
     const navigate = useNavigate();
 
 
@@ -24,9 +24,9 @@ const CheackOut = () => {
       isLoading,
       refetch,
     } = useQuery({
-      queryKey: ["cart"],
+      queryKey: ["userCart"],
       queryFn: async () => {
-        const { data } = await axiosPublic(`/userCart/${user.email}`);
+        const { data } = await axiosSecure(`/userCart/${user.email}`);
         return data;
       },
     });
@@ -36,19 +36,20 @@ const CheackOut = () => {
 
     useEffect(() => {
         if (totalPrice > 0) {
-            axiosPublic.post('/create-payment-intent', { price: totalPrice })
+            axiosSecure.post('/create-payment-intent', { price: totalPrice })
                 .then(res => {
                     console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
                 })
         }
 
-    }, [axiosPublic, totalPrice])
+    }, [axiosSecure, totalPrice])
 
     // conbained carts id and count
     const combinedCartInfo = cart.map(item => ({
         itemId: item._id,
-        count: item.count
+        count: item.count,
+        name: item.name
       }));
 
     const handleSubmit = async (event) => {
@@ -105,10 +106,10 @@ const CheackOut = () => {
                     transactionId: paymentIntent.id,
                     date: new Date(), // utc date convert. use moment js to 
                     cartInfo: combinedCartInfo,
-                    status: 'success'
+                    status: 'pending'
                 }
 
-                const res = await axiosPublic.post('/payments', payment);
+                const res = await axiosSecure.post('/payments', payment);
                 console.log('payment saved', res.data);
                 refetch();
                 if (res.data?.paymentResult?.insertedId) {

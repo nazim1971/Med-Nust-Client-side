@@ -75,8 +75,7 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
             per_unit_price: e.per_unit_price,
             description: e.description,
             image: e.image,
-            count: 1,
-            status: 'pending'
+            count: 1
         };
         try {
             // Await the call to postMedicineData and log the result

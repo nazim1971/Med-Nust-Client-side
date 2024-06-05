@@ -6,21 +6,23 @@ import LoadingSpinner from "../../../components/LoadingSpiner";
 const AdminHome = () => {
 
     const axiosSecure = useAxiosSecure()
-    const {data: cart = [],isLoading } = useQuery({
-        queryKey: ["pending Total"],
-        queryFn: async()=>{
-            const {data} = await axiosSecure('/cart');
-            return data
-        }
-    })
-    
-    const {data: payment = [] } = useQuery({
-        queryKey: ["paid total"],
-        queryFn: async()=>{
-            const {data} = await axiosSecure('/payments');
-            return data
-        }
-    })
+    const { data: paidPayments = [], isLoading } = useQuery({
+        queryKey: ["paidPayments"],
+        queryFn: async () => {
+          const { data } = await axiosSecure(`/payments?status=paid`);
+          const total = data.reduce((sum, item) => sum + item.price, 0);
+          return { data, totalPaid: total }; // Return both data and calculated total
+        },
+      });
+      
+      const { data: pendingPayments = [] } = useQuery({
+        queryKey: ["pendingPayments"],
+        queryFn: async () => {
+          const { data } = await axiosSecure(`/payments?status=pending`);
+          const total = data.reduce((sum, item) => sum + item.price, 0);
+          return { data, totalPending: total }; // Return both data and calculated total
+        },
+      });
     const {data: users = [] } = useQuery({
         queryKey: ["users"],
         queryFn: async()=>{
@@ -28,10 +30,8 @@ const AdminHome = () => {
             return data
         }
     })
-    //total pending amount
-    const totalPending = cart.reduce((sum,item)=>sum + item.per_unit_price * item.count, 0)
-    //total paid amount
-    const totalPaid = payment.reduce((sum,item)=> sum + item.price,0)
+
+    
 
     if(isLoading)return <LoadingSpinner/>
     return (
@@ -40,13 +40,13 @@ const AdminHome = () => {
   
   <div className="stat place-items-center">
     <div className="stat-title">Pending total</div>
-    <div className="stat-value">${totalPending} </div>
+    <div className="stat-value">${pendingPayments.totalPending} </div>
     <div className="stat-desc">From January 1st to February 1st</div>
   </div>
   
   <div className="stat place-items-center">
     <div className="stat-title">Total Paid</div>
-    <div className="stat-value text-secondary">${totalPaid} </div>
+    <div className="stat-value text-secondary">${paidPayments.totalPaid} </div>
     <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
   </div>
   
