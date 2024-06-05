@@ -11,17 +11,11 @@ const UpdateCategoryModal = ({refetch,id}) => {
       const image = data.image[0];
       const { name } = data;
       try {
-        let image_url = ""; // Initialize image_url as an empty string
+        let image_url = id.image || "" 
 
-        if (image) { // Check if a new image is selected
-          // 1. Upload image and get image url
+        if (image) { 
           image_url = await imageUpload(image);
-        } else if (id.image) { // Check if there's an existing image URL
-          image_url = id.image; // Use the existing image URL
-          console.log(image_url);
-        }
-        // 1. Upload image and get image url
-        // const image_url = await imageUpload(image);
+         }
         
         const categoryInfo = {
           category: name,
@@ -66,7 +60,6 @@ const UpdateCategoryModal = ({refetch,id}) => {
                   Select Image
                 </label>
                 <input
-                 defaultValue={id.image}
                   placeholder="Photo Url"
                   {...register("image", {required: false})}
                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
