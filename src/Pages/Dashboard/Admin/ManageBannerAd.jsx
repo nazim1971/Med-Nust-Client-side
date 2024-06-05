@@ -74,6 +74,9 @@ const ManageBannerAd = () => {
         </td>
         <td> {i.description} </td>
         <th>
+           <span>
+            {i.status}
+           </span>
         <input
         onChange={(e)=>handleToggle(i._id, e.target.checked)} type="checkbox" className="toggle [--tglbg:yellow] bg-blue-500 hover:bg-blue-700 border-blue-500"  />
         </th>
