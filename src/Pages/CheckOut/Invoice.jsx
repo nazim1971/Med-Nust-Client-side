@@ -10,7 +10,7 @@ const Invoice = () => {
         isLoading,
         refetch,
       } = useQuery({
-        queryKey: ["cart"],
+        queryKey: ["payments"],
         queryFn: async () => {
           const { data } = await axiosSecure(`/payments/${user.email}`);
           return data;

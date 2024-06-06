@@ -7,10 +7,12 @@ import ShopModal from "./ShopModal";
 import { BiCartAdd } from "react-icons/bi";
 import useAuth from "../../Hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Shop = () => {
   const {user} = useAuth()  
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
    const [id,setId] = useState(null);
 
   const { data: medicines = [], isLoading } = useQuery({
@@ -23,7 +25,7 @@ const Shop = () => {
 
 //   single medicine
 const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
-    queryKey: ["medicine",id],
+    queryKey: ["medicine single",id],
     queryFn: async () => {
       const { data } = await axiosPublic(`/medicine/${id}`);
       return data;
@@ -33,9 +35,11 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
 
     // Function to show modal and set the ID
     const handleShowModal = (medicineId) => {
+      
         setId(medicineId);
         document.getElementById('my_modal_1').showModal();
       };
+      
     
       useEffect(() => {
         if (id) {
@@ -59,8 +63,25 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
         }
       };
 
+        // Fetch cart data
+  const { data: cart = [], isLoading: isLoadingCart,refetch: refetchCart } = useQuery({
+    queryKey: ["cart2"],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/userCart/${user.email}`);
+      return data;
+    },
+  });
+
     //   add item to cart
     const handleAddToCart =async e =>{
+       // Check if the item is already in the cart
+    const isAlreadyInCart =  cart.some(cartItem => cartItem.name === e.name);
+
+
+    if (isAlreadyInCart) {
+      toast.error('This item is already in your cart.');
+      return;
+    }
 
         const medicineData = {
             user_name: user?.displayName,
@@ -75,19 +96,21 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
             description: e.description,
             image: e.image,
             count: 1,
+            sellerEmail: e.sellerEmail
         };
         try {
             // Await the call to postMedicineData and log the result
             const data = await postMedicineData(medicineData);
             console.log('Data successfully posted:', data);
             toast.success('Medicine Added Successfully!');
+            refetchCart()
           } catch (error) {
             // Handle the error if the request fails
             toast.error(error.message)
           }
     }
 
- if(isLoading) return <LoadingSpinner/>
+ if(isLoading || isLoadingCart) return <LoadingSpinner/>
 
   return (
     <div>

@@ -1,6 +1,7 @@
 
 
 const ShopModal = ({medicine}) => {
+  console.log(medicine);
     const {name,category,generic_name,company_name,mass_unit,per_unit_price,description,iamge} = medicine
     return (
         <>

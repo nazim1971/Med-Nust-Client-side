@@ -21,7 +21,6 @@ const CheackOut = () => {
 
     const {
       data: cart = [],
-      isLoading,
       refetch,
     } = useQuery({
       queryKey: ["userCart"],
@@ -47,9 +46,12 @@ const CheackOut = () => {
 
     // conbained carts id and count
     const combinedCartInfo = cart.map(item => ({
-        itemId: item._id,
+        sellerEmail: item.sellerEmail,
         count: item.count,
-        name: item.name
+        name: item.name,
+        itemId: item._id,
+        price_per_unit: item.
+        per_unit_price
       }));
 
     const handleSubmit = async (event) => {

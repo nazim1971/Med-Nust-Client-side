@@ -1,8 +1,13 @@
 import useAuth from "../../../Hooks/useAuth";
+import UpdateProfileModal from "../../../Modal/UpdateProfileModal";
 
 
 const UpdateProfile = () => {
-    const {user} = useAuth()
+    const {user,updateUserProfile,setLoader } = useAuth()
+    const handleShowModal = () => {
+      console.log('Opening modal');
+      document.getElementById('my_modal_1').showModal();
+    };
     return (
         <div className='flex justify-center items-center h-screen'>
         {/* <Helmet>
@@ -45,7 +50,7 @@ const UpdateProfile = () => {
                </div>
   
                 <div>
-                  <button className='bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
+                  <button onClick={() => handleShowModal()} className='bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
                     Update Profile
                   </button>
                   <button className='bg-[#F43F5E] px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]'>
@@ -56,6 +61,7 @@ const UpdateProfile = () => {
             </div>
           </div>
         </div>
+        <UpdateProfileModal user={user} updateUserProfile={updateUserProfile} setLoader={setLoader} />
       </div>
     );
 };

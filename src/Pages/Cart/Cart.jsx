@@ -5,10 +5,13 @@ import LoadingSpinner from "../../components/LoadingSpiner";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useEffect } from "react";
 
 const Cart = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure()
+
+  //cart items filter by user email
   const {
     data: cart = [],
     isLoading,
@@ -20,6 +23,8 @@ const Cart = () => {
       return data;
     },
   });
+
+
 
   // Calculate total price
   const totalPrice = cart.reduce((sum, item) => sum + item.per_unit_price * item.count, 0);
@@ -105,6 +110,9 @@ const Cart = () => {
       console.error("There was an error deleting the item!", error);
     }
   };
+
+
+
 
   return (
     <div>
