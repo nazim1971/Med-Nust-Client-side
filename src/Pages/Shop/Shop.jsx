@@ -6,7 +6,7 @@ import { useEffect,  useState } from "react";
 import ShopModal from "./ShopModal";
 import { BiCartAdd } from "react-icons/bi";
 import useAuth from "../../Hooks/useAuth";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Shop = () => {
@@ -15,6 +15,8 @@ const Shop = () => {
   const axiosSecure = useAxiosSecure()
    const [id,setId] = useState(null);
    const [page, setPage] = useState(1);
+   const [searchQuery, setSearchQuery] = useState("");
+   const [sortOrder, setSortOrder] = useState("");
 
   // const { data: medicines = [], isLoading } = useQuery({
   //   queryKey: ["medicines"],
@@ -23,18 +25,22 @@ const Shop = () => {
   //     return data;
   //   },
   // });
-  const { data: medicines = [], isLoading } = useQuery({
+  const { data: medicines = [], isLoading, refetch: medicineRefetch } = useQuery({
     queryKey: ['medicines', page],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/medicines?page=${page}`);
+      const { data } = await axiosSecure(`/medicines?page=${page}&search=${searchQuery}&sortOrder=${sortOrder}`);
       return data;
     },
     keepPreviousData: true,
   });
 
+
+  
+
   useEffect(() => {
-    setPage(1); // Reset page when component mounts or when filters change
-  }, [/* Add dependencies if necessary */]);
+    medicineRefetch()
+     // Reset page when component mounts or when filters change
+  }, [medicineRefetch()]);
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -136,9 +142,28 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
           }
     }
 
+ 
+
  if(isLoading || isLoadingCart) return <LoadingSpinner/>
   return (
     <div>
+      <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="input input-bordered w-full max-w-xs mb-4"
+      />
+      </div>
+      <div className="sort-controls">
+  <label htmlFor="sortOrder" className="mr-2">Sort by Price:</label>
+  <select id="sortOrder" value={sortOrder} onChange={(e) => setSortOrder(e.target.value) } className="select select-bordered">
+    <option value="asc">Low To High</option>
+    <option value="desc">High To Low</option>
+    <option value="" >Default</option>
+  </select>
+</div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}

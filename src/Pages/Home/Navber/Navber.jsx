@@ -4,6 +4,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import "animate.css";
 import useAuth from "../../../Hooks/useAuth";
 import { BiCartAdd } from "react-icons/bi";
+import ReactClock from "./ReactClock";
 
 const Navber = () => {
   const { user, logOut } = useAuth();
@@ -26,6 +27,9 @@ const Navber = () => {
       <li>
         {" "}
         <NavLink to="/shop"> Shop </NavLink>{" "}
+      </li>
+      <li>
+      <ReactClock/>
       </li>
      {
       user &&  <li>

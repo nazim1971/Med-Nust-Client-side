@@ -87,7 +87,7 @@ const SalesReport = () => {
                       )}
                       <td>{info.buyerEmail}</td>
                       <td>{info.medicineNames}</td>
-                      <td>{info.totalPrice}</td>
+                      <td>${info.totalPrice}</td>
                     </tr>
                   ))
                 )}
