@@ -40,10 +40,12 @@ const PayHistorySeller = () => {
     };
   }).filter(payment => payment.medicines.length > 0); // Filter out payments with no items for this seller
 
+
   return (
     <div>
+      
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table  className="table table-zebra">
           {/* Table head */}
           <thead>
             <tr>
@@ -63,7 +65,7 @@ const PayHistorySeller = () => {
                     <>
                       <th rowSpan={payment.medicines.length}>{index + 1}</th>
                       <td rowSpan={payment.medicines.length}>{payment.email}</td>
-                      <td rowSpan={payment.medicines.length}>{payment.status}</td>
+                      <td   rowSpan={payment.medicines.length}> <span className={`p-1 rounded-xl ${payment.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` }>{payment.status}</span> </td>
                     </>
                   )}
                   <td>{medicine.name}</td>

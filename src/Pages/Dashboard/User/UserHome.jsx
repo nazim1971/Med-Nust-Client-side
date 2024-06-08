@@ -32,7 +32,7 @@ const UserHome = () => {
         payments.map((i,idx)=><tr key={i._id}>
         <th>{idx+1} </th>
         <td>{i.transactionId} </td>
-        <td> {i.status} </td>
+        <td className={`btn ${i.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` } > {i.status} </td>
       </tr>)
       }
     

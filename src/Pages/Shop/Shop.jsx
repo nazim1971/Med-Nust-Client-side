@@ -14,14 +14,40 @@ const Shop = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure()
    const [id,setId] = useState(null);
+   const [page, setPage] = useState(1);
 
+  // const { data: medicines = [], isLoading } = useQuery({
+  //   queryKey: ["medicines"],
+  //   queryFn: async () => {
+  //     const { data } = await axiosPublic(`/medicines`);
+  //     return data;
+  //   },
+  // });
   const { data: medicines = [], isLoading } = useQuery({
-    queryKey: ["medicines"],
+    queryKey: ['medicines', page],
     queryFn: async () => {
-      const { data } = await axiosPublic(`/medicines`);
+      const { data } = await axiosSecure(`/medicines?page=${page}`);
       return data;
     },
+    keepPreviousData: true,
   });
+
+  useEffect(() => {
+    setPage(1); // Reset page when component mounts or when filters change
+  }, [/* Add dependencies if necessary */]);
+
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const getSerialIndex = (index) => {
+    return (page - 1) * 8 + index + 1; // Assuming 8 items per page
+  };
+
 
 //   single medicine
 const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
@@ -111,7 +137,6 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
     }
 
  if(isLoading || isLoadingCart) return <LoadingSpinner/>
-
   return (
     <div>
       <div className="overflow-x-auto">
@@ -128,7 +153,7 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
           <tbody>
             {medicines.map((i, idx) => (
               <tr key={i._id}>
-                <th> {idx+1} </th>
+                <th> {getSerialIndex(idx)} </th>
                 <td> {i.name} </td>
                 <td> <BsEyeFill className="text-2xl" onClick={() => handleShowModal(i._id)} />  </td>
                 <td> <BiCartAdd onClick={()=>handleAddToCart(i)}  className="text-2xl"  />
@@ -139,9 +164,12 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
             ))}
           </tbody>
         </table>
+        <button className="btn btn-primary" onClick={handlePrevPage} disabled={page === 1}>Previous Page</button>
+        
+        <button className="btn btn-secondary" onClick={handleNextPage} disabled={medicines.length < 8} >Next {page} </button>
       </div>
+      
         <ShopModal medicine={medicine} />
-        <Toaster/>
     </div>
   );
 };
