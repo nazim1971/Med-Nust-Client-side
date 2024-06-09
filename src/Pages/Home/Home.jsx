@@ -1,11 +1,16 @@
 
 import Banner from "./Banner/Banner";
+import BannerStat from "./Banner/BannerStat";
 import Category from "./Category/Category";
 
 const Home = () => {
     return (
         <div>
-            <Banner/> 
+           <div className="mt-10">
+           <Banner/> 
+           </div>
+           <BannerStat/>
+           <hr />
             <Category/>
         </div>
     );

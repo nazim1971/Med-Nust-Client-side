@@ -16,8 +16,8 @@ const ReactClock = () => {
     return time.toLocaleTimeString([], { hour12: false });
   };
     return (
-      <div>
-      <div className="text-xl font-semibold text-orange-400">{formatTime(time)}</div>
+      <div className="flex justify-center">
+      <div className=" text-orange-400 rounded-md  font-bold ">{formatTime(time)}</div>
     </div>
     );
 };

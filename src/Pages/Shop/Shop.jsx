@@ -8,6 +8,7 @@ import { BiCartAdd } from "react-icons/bi";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
   const {user} = useAuth()  
@@ -17,6 +18,7 @@ const Shop = () => {
    const [page, setPage] = useState(1);
    const [searchQuery, setSearchQuery] = useState("");
    const [sortOrder, setSortOrder] = useState("");
+   const  navigate = useNavigate();
 
   // const { data: medicines = [], isLoading } = useQuery({
   //   queryKey: ["medicines"],
@@ -81,6 +83,7 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
 
     //   cart post 
     const postMedicineData = async (medicineData) => {
+       
         try {
           // Await the axios POST request
           const response = await axiosPublic.post('/cart', medicineData)
@@ -106,6 +109,7 @@ const { data: medicine = [] , refetch: refetchMedicine} = useQuery({
 
     //   add item to cart
     const handleAddToCart =async e =>{
+      if(!user) return navigate("/login");
        // Check if the item is already in the cart
     const isAlreadyInCart =  cart.some(cartItem => cartItem.name === e.name);
 

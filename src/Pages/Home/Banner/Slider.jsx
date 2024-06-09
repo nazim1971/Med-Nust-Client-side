@@ -39,12 +39,15 @@ const Slider = () => {
         {banner.map((i) => (
           <SwiperSlide key={i.id}>
             <div
-              className="h-80 w-full rounded-2xl bg-cover flex items-center justify-center"
+              className="h-96 w-full bg-no-repeat rounded-2xl bg-cover "
               style={{
                 backgroundImage: `url(${i.image})`,
               }}
             >
-              <div className="text-white"></div>
+              <div className="p-5 text-[#a2a2a2] ">
+              <h3 className="font-bold"> {i.name} </h3>
+              <h3 className=""> {i.description} </h3>
+              </div>
             </div>
           </SwiperSlide>
         ))}
