@@ -27,8 +27,7 @@ const UpdateMedicineModal = ({categoryName, refetch, id}) => {
             // 1. Upload image and get image url
             image_url = await imageUpload(image);
           }
-          // 1. Upload image and get image url
-          // const image_url = await imageUpload(image);
+          
           
           
             const updatedMedicine = {
@@ -43,18 +42,15 @@ const UpdateMedicineModal = ({categoryName, refetch, id}) => {
                 discount: data.discount,
               };
           
-          console.log("data before adding db", updatedMedicine);
           await axiosSecure.patch(`/selectedMed/${updateMed._id}`, updatedMedicine).then((res) => {
-              console.log(res.data);
+          
             if (res.data.modifiedCount > 0) {
               refetch();
-              console.log("category added to the database");
               toast.success("new cateogry added succesfully");
               document.getElementById("my_modal_2").close();
             }
           });
         } catch (err) {
-          console.log(err);
           toast.error(err.message);
         }
       };

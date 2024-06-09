@@ -8,6 +8,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import UpdateCategoryModal from "../../../Modal/UpdateCategoryModal";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 
 const ManageCategory = () => {
@@ -35,8 +36,8 @@ const ManageCategory = () => {
             confirmButtonText: "Yes, delete it!",
           }).then(async (result) => {
             if (result.isConfirmed) {
-              const response = await axiosSecure.delete(`/category/${itemId._id}`);
-              console.log("Item deleted successfully:", response.data);
+               await axiosSecure.delete(`/category/${itemId._id}`);
+              
     
               Swal.fire({
                 title: "Deleted!",
@@ -53,16 +54,17 @@ const ManageCategory = () => {
     //update category
 
     const handleShowModal = () => {
-        console.log('Opening modal');
         document.getElementById('my_modal_1').showModal();
       };
     const handleShowModalUp = (id) => {
         setId(id)
-        console.log('Opening modal');
         document.getElementById('my_modal_2').showModal();
       };
     return (
         <div>
+          <Helmet>
+                <title>Manage category</title>
+            </Helmet>
             <div className="text-right">
                 <button onClick={() => handleShowModal()} className="btn btn-warning">Add Category</button>
             </div>
@@ -101,11 +103,11 @@ const ManageCategory = () => {
               </div>
             </td>
             <td>
-             <GrUpdate onClick={() => handleShowModalUp(i)} />
+             <GrUpdate className="text-2xl" onClick={() => handleShowModalUp(i)} />
               
             </td>
             <td>
-                <FiDelete onClick={()=>handleDelete(i)}/>
+                <FiDelete className="text-2xl text-red-500" onClick={()=>handleDelete(i)}/>
             </td>
            
           </tr>

@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/LoadingSpiner";
+import { Helmet } from "react-helmet";
 
 const AdminHome = () => {
 
@@ -36,24 +37,24 @@ const AdminHome = () => {
     if(isLoading)return <LoadingSpinner/>
     return (
         <div>
-           <div className="stats shadow">
+          <Helmet>
+                <title>Admin Home</title>
+            </Helmet>
+           <div className="stats shadow w-full border">
   
-  <div className="stat place-items-center">
+  <div className="stat place-items-center border-r">
     <div className="stat-title">Pending total</div>
     <div className="stat-value">${pendingPayments.totalPending} </div>
-    <div className="stat-desc">From January 1st to February 1st</div>
   </div>
   
-  <div className="stat place-items-center">
+  <div className="stat place-items-center border-r">
     <div className="stat-title">Total Paid</div>
     <div className="stat-value text-secondary">${paidPayments.totalPaid} </div>
-    <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
   </div>
   
   <div className="stat place-items-center">
     <div className="stat-title">New Registers</div>
     <div className="stat-value">{users.length} </div>
-    <div className="stat-desc">↘︎ 90 (14%)</div>
   </div>
   
 </div>

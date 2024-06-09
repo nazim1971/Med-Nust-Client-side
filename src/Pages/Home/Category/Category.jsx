@@ -9,14 +9,18 @@ import Aos from "aos";
 import { useEffect } from "react";
 
 
+
 const Category = () => {
+
+   
+    
+    const axiosPublic = useAxiosPublic()
+
 
     useEffect(()=>{
         Aos.init()
       },[])
 
-
-    const axiosPublic = useAxiosPublic();
     const {data: categoryName=[], isLoading} = useQuery({
         queryKey: ['categoryName'],
         queryFn: async ()=>{
@@ -27,6 +31,7 @@ const Category = () => {
 
     if(isLoading) return <LoadingSpinner/>
 
+   
     return (
         <div>
             <Title subTitle={'Discover a wide range of healthcare and wellness products. Find everything you need for your health and well-being.'} title={'Shop by Category'} />

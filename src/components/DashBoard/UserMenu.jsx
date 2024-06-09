@@ -1,21 +1,16 @@
 import { FaCalendar, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const UserMenu = () => {
+const UserMenu = ({closeDrawer}) => {
   return (
     <>
-      <li>
+      <li onClick={closeDrawer}>
         <NavLink to="/dashboard/userHome">
-          <FaHome></FaHome>
-          User Home
+        <FaCalendar></FaCalendar>
+          Payment History
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/dashboard/payHistoryUser">
-          <FaCalendar></FaCalendar>
-          User Pay History
-        </NavLink>
-      </li>
+     
     </>
   );
 };

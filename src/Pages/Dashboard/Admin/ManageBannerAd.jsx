@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/LoadingSpiner";
+import { Helmet } from "react-helmet-async";
 
 
 const ManageBannerAd = () => {
@@ -17,15 +18,12 @@ const ManageBannerAd = () => {
     //toggle buton
     const handleToggle = async(id,isChecked)=>{
         const newStatus = isChecked ? "active" : "hold";
-        console.log(newStatus);
+       
         try {
             const response = await axiosSecure.patch(`/banner/${id}`, { status: newStatus });
             if (response.status === 200) {
               refetch(); // Refetch data after updating banner status
-            } else {
-              // Handle error if update fails
-              console.error("Failed to update banner status:", response.data);
-            }
+            } 
           } catch (error) {
             console.error("Error updating banner status:", error);
           }
@@ -35,6 +33,9 @@ const ManageBannerAd = () => {
     if(isLoading) return <LoadingSpinner/>
     return (
         <div>
+          <Helmet>
+                <title>Manage Banner Ad </title>
+            </Helmet>
                       <div className="overflow-x-auto">
   <table className="table">
     {/* head */}

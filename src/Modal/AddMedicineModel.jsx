@@ -23,7 +23,6 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
     try {
       // 1. Upload image and get image url
       const image_url = await imageUpload(image);
-      console.log(image_url);
       const categoryInfo = {
         category,
         name,
@@ -36,17 +35,14 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
         image: image_url,
         sellerEmail: user?.email
       };
-      console.log("data before adding db", categoryInfo);
       await axiosSecure.post("/addMed", categoryInfo).then((res) => {
         if (res.data.insertedId) {
           refetch();
-          console.log("category added to the database");
           toast.success("new cateogry added succesfully");
           document.getElementById("my_modal_1").close();
         }
       });
     } catch (err) {
-      console.log(err);
       toast.error(err.message);
     }
   };

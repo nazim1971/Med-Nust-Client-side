@@ -15,7 +15,6 @@ const AdModel = () => {
       try {
         // 1. Upload image and get image url
         const image_url = await imageUpload(image);
-        console.log(image_url);
         const adInfo = {
           name,
           image: image_url,
@@ -23,16 +22,13 @@ const AdModel = () => {
           status: "hold",
           sellerEmail: user.email
         };
-        console.log("data before adding db", adInfo);
         await axiosSecure.post("/addBanner", adInfo).then((res) => {
           if (res.data.insertedId) {
-            console.log("category added to the database");
             toast.success("new cateogry added succesfully");
             document.getElementById("my_modal_1").close();
           }
         });
       } catch (err) {
-        console.log(err);
         toast.error(err.message);
       }
     };

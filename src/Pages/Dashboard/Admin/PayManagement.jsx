@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/LoadingSpiner";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 
 const PayManagement = () => {
@@ -29,7 +30,6 @@ const PayManagement = () => {
                 axiosSecure.patch(`/updatePayStatus/${id}`, { status: 'paid' })
                     .then(res => {
                         refetch();
-                        console.log(res.data);
                         Swal.fire({
                             title: "Updated!",
                             text: "The user role has been updated.",
@@ -44,6 +44,9 @@ const PayManagement = () => {
       
     return (
         <div>
+          <Helmet>
+                <title>Payment management</title>
+            </Helmet>
            <div className="overflow-x-auto">
   <table className="table table-zebra">
     {/* head */}
@@ -63,7 +66,7 @@ const PayManagement = () => {
         <th>{idx+1} </th>
         <td> {i.email} </td>
         <td>{i.status} </td>
-        <td disabled={i.status === 'paid'}  onClick={()=>handleAccept(i._id)}  className="btn btn-success btn-xs">Accept</td>
+        <td disabled={i.status === 'paid'}  onClick={()=>handleAccept(i._id)}  className="btn btn-success btn-xs text-white pt-1 ">Accept</td>
       </tr>)
       }
      

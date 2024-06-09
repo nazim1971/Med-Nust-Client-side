@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import useAuth from "../../../Hooks/useAuth";
 import UpdateProfileModal from "../../../Modal/UpdateProfileModal";
 
@@ -5,15 +6,14 @@ import UpdateProfileModal from "../../../Modal/UpdateProfileModal";
 const UpdateProfile = () => {
     const {user,updateUserProfile,setLoader } = useAuth()
     const handleShowModal = () => {
-      console.log('Opening modal');
       document.getElementById('my_modal_1').showModal();
     };
     return (
         <div className='flex justify-center items-center h-screen'>
-        {/* <Helmet>
+        <Helmet>
           <title>Profile</title>
-        </Helmet> */}
-        <div className='bg-white shadow-lg rounded-2xl w-3/5'>
+        </Helmet>
+        <div className='bg-white shadow-lg rounded-2xl md:w-3/5'>
           <img
             alt='profile'
             src='https://wallpapercave.com/wp/wp10784415.jpg'
@@ -28,12 +28,8 @@ const UpdateProfile = () => {
               />
             </a>
   
-            <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full'>
-              Admin
-            </p>
-            <p className='mt-2 text-xl font-medium text-gray-800 '>
-              User Id: {user.uid}
-            </p>
+            
+           
             <div className='w-full p-2 mt-4 rounded-lg'>
               <div className='flex flex-wrap items-center justify-between text-sm text-gray-600 '>
                <div>
@@ -49,7 +45,7 @@ const UpdateProfile = () => {
                 </p>
                </div>
   
-                <div>
+                <div className="mt-5 md:mt-0">
                   <button onClick={() => handleShowModal()} className='bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
                     Update Profile
                   </button>

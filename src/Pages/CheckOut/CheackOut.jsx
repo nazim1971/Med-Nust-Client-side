@@ -5,6 +5,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 
 const CheackOut = () => {
@@ -37,7 +38,6 @@ const CheackOut = () => {
         if (totalPrice > 0) {
             axiosSecure.post('/create-payment-intent', { price: totalPrice })
                 .then(res => {
-                    console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
                 })
         }
@@ -77,7 +77,6 @@ const CheackOut = () => {
             setError(error.message);
         }
         else {
-            console.log('payment method', paymentMethod)
             setError('');
         }
 
@@ -98,7 +97,6 @@ const CheackOut = () => {
         else {
             console.log('payment intent', paymentIntent)
             if (paymentIntent.status === 'succeeded') {
-                console.log('transaction id', paymentIntent.id);
                 setTransactionId(paymentIntent.id);
 
                 // now save the payment in the database
@@ -112,7 +110,7 @@ const CheackOut = () => {
                 }
 
                 const res = await axiosSecure.post('/payments', payment);
-                console.log('payment saved', res.data);
+             
                 refetch();
                 if (res.data?.paymentResult?.insertedId) {
                     Swal.fire({
@@ -132,12 +130,15 @@ const CheackOut = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <Helmet>
+                <title>Checkout</title>
+            </Helmet>
         <CardElement
             options={{
                 style: {
                     base: {
-                        fontSize: '16px',
-                        color: '#424770',
+                        fontSize: '20px',
+                        color: '#1E90FF',
                         '::placeholder': {
                             color: '#aab7c4',
                         },

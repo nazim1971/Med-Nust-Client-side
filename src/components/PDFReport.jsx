@@ -2,6 +2,8 @@ import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 const PDFReport = ({ sellersData }) => {
 
+  const date = new Date().toLocaleDateString();
+
     const styles = StyleSheet.create({
         page: {
           flexDirection: 'column',
@@ -52,7 +54,7 @@ const PDFReport = ({ sellersData }) => {
 return <>
         <Document>
         <Page style={styles.page}>
-          <Text >Sales Report</Text>
+          <Text >Sales Report : {date} </Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>#</Text>

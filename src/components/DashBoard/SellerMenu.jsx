@@ -5,33 +5,34 @@ import { MdPayment } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 
-const SellerMenu = () => {
+const SellerMenu = ({closeDrawer}) => {
     return (
         <>
-        <li>
+        <li onClick={closeDrawer}>
           <NavLink to="/dashboard/sellerHome">
             <FaHome></FaHome>
-            User Home
+            Home
           </NavLink>
         </li>
-        <li>
+        <li onClick={closeDrawer}>
           <NavLink to="/dashboard/manageMedicines">
             <GiMedicines></GiMedicines>
             Manage Medicines
           </NavLink>
         </li>
-        <li>
+        <li onClick={closeDrawer}>
+          <NavLink to="/dashboard/payHistorySeller">
+            <MdPayment></MdPayment>
+            Payment History
+          </NavLink>
+        </li>
+        <li onClick={closeDrawer}>
           <NavLink to="/dashboard/askForAd">
             <FcAdvertising></FcAdvertising>
            Ask for Ad
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/dashboard/payHistorySeller">
-            <MdPayment></MdPayment>
-            Seller Pay History
-          </NavLink>
-        </li>
+        
       </>
     );
 };

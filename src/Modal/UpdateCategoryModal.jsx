@@ -21,18 +21,15 @@ const UpdateCategoryModal = ({refetch,id}) => {
           category: name,
           image: image_url,
         };
-        console.log("data before adding db", categoryInfo);
         await axiosSecure.patch(`/category/${id._id}`, categoryInfo).then((res) => {
-            console.log(res.data);
+            
           if (res.data.modifiedCount > 0) {
             refetch();
-            console.log("category added to the database");
-            toast.success("new cateogry added succesfully");
+            toast.success("New category added succesfully");
             document.getElementById("my_modal_2").close();
           }
         });
       } catch (err) {
-        console.log(err);
         toast.error(err.message);
       }
     };

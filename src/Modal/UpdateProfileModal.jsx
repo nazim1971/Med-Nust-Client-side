@@ -12,9 +12,7 @@ const UpdateProfileModal = ({updateUserProfile,setLoader, user }) => {
     if (image) { 
       image_url = await imageUpload(image);
      }
-      console.log(image_url);
           
-      console.log("data before adding db");
       await  updateUserProfile(name, image_url)
       .then(() => {
         setLoader(false)

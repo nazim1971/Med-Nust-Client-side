@@ -4,6 +4,7 @@ import PDFReport from '../../../components/PDFReport';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DateRanger from '../../../components/DashBoard/DateRanger';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const SalesReport = () => {
   const axiosSecure = useAxiosSecure();
@@ -48,6 +49,9 @@ const SalesReport = () => {
 
   return (
     <div>
+      <Helmet>
+                <title>Sales Report </title>
+            </Helmet>
       <div>
       <PDFDownloadLink
               document={<PDFReport sellersData={sellersData} />}

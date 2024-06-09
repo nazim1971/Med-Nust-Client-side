@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const UserHome = () => {
     const { user } = useAuth();
@@ -16,6 +17,9 @@ const UserHome = () => {
     });
     return (
         <div>
+          <Helmet>
+                <title>Payment History</title>
+            </Helmet>
             <div className="overflow-x-auto">
   <table className="table table-zebra">
     {/* head */}
@@ -32,7 +36,7 @@ const UserHome = () => {
         payments.map((i,idx)=><tr key={i._id}>
         <th>{idx+1} </th>
         <td>{i.transactionId} </td>
-        <td className={`btn ${i.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` } > {i.status} </td>
+        <td className={`btn btn-sm text-white  ${i.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` } > {i.status} </td>
       </tr>)
       }
     

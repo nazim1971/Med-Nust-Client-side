@@ -5,7 +5,7 @@ import LoadingSpinner from "../../components/LoadingSpiner";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
   const { user } = useAuth();
@@ -64,8 +64,8 @@ const Cart = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await axiosSecure.delete(`/deleteOneCart/${itemId}`);
-          console.log("Item deleted successfully:", response.data);
+           await axiosSecure.delete(`/deleteOneCart/${itemId}`);
+          
 
           Swal.fire({
             title: "Deleted!",
@@ -93,10 +93,9 @@ const Cart = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await axiosSecure.delete(
+          await axiosSecure.delete(
             `/deleteAllCart/${user.email}`
           );
-          console.log("Item deleted successfully:", response.data);
 
           Swal.fire({
             title: "Deleted!",
@@ -113,66 +112,83 @@ const Cart = () => {
 
 
 
-
   return (
+   <>
+   <Helmet>
+                <title>Cart</title>
+            </Helmet>
+   {
+    cart.length === 0 ? <div className="h-screen flex justify-center items-center text-5xl text-[#7a7a7a]"> 
+      <p>
+      No item in the cart
+      </p> </div>
+    :
     <div>
-      <div className="my-5 flex justify-between">
-        <span className="text-2xl font-semibold bg-red-300 p-2 rounded-xl">
-          Total ${totalPrice.toFixed(2)}{" "}
-        </span>
-        <Link to='/payment' className="btn btn-success ">Check Out</Link>
-        <button
-          onClick={handleDeleteAll}
-          className="btn btn-warning text-white  "
-        >
-          Delete All
-        </button>
-        <Link to='/invoice'>invoice</Link>
-      </div>
-      <div className="grid grid-cols-3 gap-8 ">
-        {cart.map((i) => (
-          <div key={i._id} className="card  bg-base-100 shadow-xl">
-            <button className="bg-red-500 w-8 rounded-full absolute right-0">
-              #{i.count}
-            </button>
-            <figure>
-              <img
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                alt="Shoes"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{i.name} </h2>
-              <h2 className="card-title">{i.company_name} </h2>
-              <h2 className="card-title">Price:{i.per_unit_price}$ </h2>
-              <p>{i.description} </p>
-              <div className="card-actions justify-between">
-                <div className="space-x-2">
-                  <button
-                    onClick={() => handleIncrease(i._id)}
-                    className="btn btn-circle text-2xl bg-green-400"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => handleDecrease(i._id)}
-                    className="btn btn-circle text-2xl bg-red-400"
-                  >
-                    -
-                  </button>
-                </div>
+    <div className="my-8 flex justify-between">
+      <button className=" font-semibold bg-orange-400 text-white btn-sm  rounded-xl">
+        Total ${totalPrice.toFixed(2)}{" "}
+      </button>
+     <div className="space-x-4">
+     <Link to='/payment' className="btn btn-sm btn-accent text-white ">Check Out </Link>
+      <button
+        onClick={handleDeleteAll}
+        className="btn btn-sm btn-warning text-white  "
+      >
+        Delete All
+      </button>
+     </div>
+      
+    </div>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+      {cart.map((i) => (
+        <div key={i._id} className="card border bg-base-100 shadow-xl">
+          <button className="bg-red-500 text-white w-8 rounded-full absolute right-0">
+            {i.count}
+          </button>
+          
+            <div>
+            <img
+              src={i.image}
+              alt="medicine"
+              className="h-64 rounded-tl-2xl rounded-tr-2xl w-full"
+            />
+            </div>
+          
+          <div className="p-4 space-y-2">
+            <h2 className="card-title">{i.name} </h2>
+            <h2 > <span className="font-semibold">Company:</span> {i.company_name} </h2>
+            <h2 ><span className="font-semibold">Price:</span> {i.per_unit_price}$ </h2>
+            <p>{i.description} </p>
+            <hr />
+            <div className="card-actions justify-between">
+              <div className="space-x-2">
                 <button
-                  onClick={() => handleDelete(i._id)}
-                  className="btn bg-yellow-300 "
+                  onClick={() => handleIncrease(i._id)}
+                  className="btn btn-circle text-2xl text-white bg-green-400"
                 >
-                  Delete
+                  +
+                </button>
+                <button
+                  onClick={() => handleDecrease(i._id)}
+                  className="btn text-white btn-circle text-2xl bg-red-400"
+                >
+                  -
                 </button>
               </div>
+              <button
+                onClick={() => handleDelete(i._id)}
+                className="btn text-white bg-yellow-300 "
+              >
+                Delete
+              </button>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+  </div>
+   }
+   </>
   );
 };
 

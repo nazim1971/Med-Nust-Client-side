@@ -5,7 +5,6 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Sign-Up/Register";
 import AddProduct from "../Pages/Home/Navber/AddProduct";
 import Private from "./Private";
-import ViewPrivate from "../Pages/Home/ViewPrivate";
 import UpdateProfile from "../Pages/Home/UpdateProfile/UpdateProfile";
 import CategoryDate from "../Pages/Home/CategoryData/CategoryDate";
 import Shop from "../Pages/Shop/Shop";
@@ -14,7 +13,6 @@ import Payment from "../Pages/CheckOut/Payment";
 import Invoice from "../Pages/CheckOut/Invoice";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import UserHome from "../Pages/Dashboard/User/UserHome";
-import PayHistoryUser from "../Pages/Dashboard/User/PayHistoryUser";
 import SellerHome from "../Pages/Dashboard/Seller/SellerHome";
 import ManageMedicines from "../Pages/Dashboard/Seller/ManageMedicines";
 import AskForAd from "../Pages/Dashboard/Seller/AskForAd";
@@ -39,7 +37,7 @@ const routes = createBrowserRouter([
         },
        {
         path: '/cart',
-        element: <Cart/>
+        element: <Private><Cart/></Private>
        },
        {
         path: '/shop',
@@ -58,10 +56,6 @@ const routes = createBrowserRouter([
         element: <AddProduct/>
        },
        {
-        path: '/viewPrivate',
-        element: <Private><ViewPrivate/></Private>
-       },
-       {
         path: '/updateProfile',
         element: <Private><UpdateProfile/></Private>
        },
@@ -75,7 +69,7 @@ const routes = createBrowserRouter([
        },
        {
         path: '/invoice',
-        element: <Invoice/>
+        element: <Private><Invoice/></Private>
        }
       ]
     },
@@ -88,10 +82,7 @@ const routes = createBrowserRouter([
           path: 'userHome',
           element: <Private><UserHome/> </Private>
         },
-        {
-          path: 'payHistoryUser',
-          element:  <Private><PayHistoryUser/></Private>
-        },
+       
         // seller dashboard
         {
           path: 'sellerHome',

@@ -3,19 +3,20 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import LoadingSpinner from "../../../components/LoadingSpiner";
 import { BsEyeFill } from "react-icons/bs";
 import { BiCartAdd } from "react-icons/bi";
 import ShopModal from "../../Shop/ShopModal";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const CategoryDate = () => {
     const { user } = useAuth();
     const { cat } = useParams();
     const [id, setId] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [sortOrder, setSortOrder] = useState("");
+    const [sortOrder, setSortOrder] = useState("asc");
     const [page, setPage] = useState(1);
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
@@ -66,13 +67,10 @@ const CategoryDate = () => {
     //   cart post 
     const postMedicineData = async (medicineData) => {
         try {
-            // Await the axios POST request
             const response = await axiosPublic.post('/cart', medicineData);
             console.log('Data successfully posted--== 2:', response.data);
-            // Return the response data if the request is successful
             return response.data;
         } catch (error) {
-            // Log the error and rethrow it for further handling if necessary
             console.error('Error posting data:', error.response ? error.response.data : error.message);
             toast.error(error.message);
             throw error;
@@ -114,9 +112,8 @@ const CategoryDate = () => {
         };
         try {
             // Await the call to postMedicineData and log the result
-            const data = await postMedicineData(medicineData);
-            console.log('Data successfully posted:', data);
-            toast.success('Medicine Added Successfully!');
+             await postMedicineData(medicineData);
+            toast.success('Medicine Added to cart!!');
             refetchCart();
         } catch (error) {
             // Handle the error if the request fails
@@ -128,6 +125,10 @@ const CategoryDate = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Shop</title>
+            </Helmet>
+            <div className="flex justify-between mt-10 mb-4">
             <div>
                 <input
                     type="text"
@@ -138,12 +139,13 @@ const CategoryDate = () => {
                 />
             </div>
             <div className="sort-controls">
-                <label htmlFor="sortOrder" className="mr-2">Sort by Price:</label>
-                <select id="sortOrder" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="select select-bordered">
+                <label htmlFor="sortOrder" className="mr-2"></label>
+                <select id="sortOrder" defaultValue={""} value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className=" border p-1 rounded-xl ">
                     <option value="asc">Low To High</option>
                     <option value="desc">High To Low</option>
                     <option value="">Default</option>
                 </select>
+            </div>
             </div>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
@@ -168,9 +170,11 @@ const CategoryDate = () => {
                         ))}
                     </tbody>
                 </table>
-                <button className="btn btn-primary" onClick={handlePrevPage} disabled={page === 1}>Previous Page</button>
+                <div className="space-x-5 text-right mt-5">
+                <button className="btn btn-primary btn-sm" onClick={handlePrevPage} disabled={page === 1}>Previous Page {page-1} </button>
         
-        <button className="btn btn-secondary" onClick={handleNextPage} disabled={categoryData.length < 8} >Next {page} </button>
+        <button className="btn btn-secondary btn-sm" onClick={handleNextPage} disabled={categoryData.length < 8} >Next {page} </button>
+                </div>
             </div>
             <ShopModal medicine={medicine} />
          

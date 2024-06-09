@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {  FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 
 const Login = () => {
@@ -43,7 +44,6 @@ const onSubmit = (data) => {
 const handleGoogleLogin = () => {
   googleLogin()
   .then(result =>{
-    console.log(result.user);
     const userInfo = {
         email: result.user?.email,
         name: result.user?.displayName,
@@ -53,7 +53,6 @@ const handleGoogleLogin = () => {
     }
     axiosPublic.post('/users', userInfo)
     .then(res =>{
-        console.log(res.data);
         toast.success("Login Successfully");
         navigate(location?.state ? location.state : "/");
     })
@@ -64,12 +63,15 @@ const handleGoogleLogin = () => {
 
     return (
       <div className="my-20">
+        <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className="flex w-full border max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg  lg:max-w-4xl">
           <div className="hidden bg-cover lg:block lg:w-1/2" style={{backgroundImage: 'url(https://i.ibb.co/MfYyWhP/login.jpg)'}} ></div>
       
           <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
               <div className="flex justify-center mx-auto">
-                  <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/GJg1fYZ/Brain-boost-removebg-preview.png" alt="" />
+                  <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/Z88qpcZ/MED-NUST-removebg-preview.png" alt="" />
               </div>
       
               <p className="mt-3 text-xl text-center ">

@@ -4,6 +4,7 @@ import useAuth from "../../../Hooks/useAuth";
 import AddMedicineModel from "../../../Modal/AddMedicineModel";
 import LoadingSpinner from "../../../components/LoadingSpiner";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet";
 // import { MdUpdate } from "react-icons/md";
 // import UpdateMedicineModal from "../../../Modal/UpdateMedicineModal";
 // import { useEffect, useState } from "react";
@@ -22,12 +23,7 @@ const ManageMedicines = () => {
         }
     })
  
-    // console.log(updateMed);
-    // useEffect(() => {
-    //     if (id && updateMed) {
-    //         document.getElementById('my_modal_2').showModal();
-    //     }
-    // }, [id, updateMed]);
+
 
    
     const {data: categoryName=[]} = useQuery({
@@ -40,7 +36,6 @@ const ManageMedicines = () => {
 
     
     const handleShowModal = () => {
-        console.log('Opening modal');
         document.getElementById('my_modal_1').showModal();
       };
     // const handleShowUpdate = (id) => {
@@ -54,6 +49,9 @@ const ManageMedicines = () => {
       if(isLoading)return <LoadingSpinner/>
     return (
         <div>
+          <Helmet>
+                <title>Manage Medicines</title>
+            </Helmet>
             <div className="text-right">
                 <button onClick={() => handleShowModal()} className="btn btn-warning" >Add Medicine</button>
             </div>

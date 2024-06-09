@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/LoadingSpiner";
+import { Helmet } from "react-helmet-async";
 
 const PayHistorySeller = () => {
   const { user } = useAuth();
@@ -69,6 +70,9 @@ const PayHistorySeller = () => {
   if(isLoading)return <LoadingSpinner/>
   return (
     <div>
+      <Helmet>
+                <title>Seller Home</title>
+            </Helmet>
         <div className="stats shadow">
   
   <div className="stat place-items-center">

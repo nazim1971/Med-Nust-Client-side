@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useEffect } from "react";
 
 const Invoice = () => {
     const {user}  = useAuth()
     const axiosSecure = useAxiosSecure()
     const {
         data: payment = [],
-        isLoading,
         refetch,
       } = useQuery({
         queryKey: ["payments"],
@@ -17,11 +17,21 @@ const Invoice = () => {
         },
       });
 
+      useEffect(() => {
+        refetch(); // Fetch payment data once when the component mounts
+    }, []);
 
 
     return (
         <div>
-          payment: {payment.length}
+         <p>
+         Email: {payment.email}
+         </p>
+         <p>
+          TransactionId: {payment.
+transactionId}
+         </p>
+
          
         </div>
     );

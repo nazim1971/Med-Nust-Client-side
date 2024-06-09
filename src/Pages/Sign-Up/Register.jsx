@@ -8,6 +8,7 @@ import useAuth from "../../Hooks/useAuth";
 import { imageUpload } from "../../Hooks";
 import { TbFidgetSpinner } from "react-icons/tb";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic()
@@ -56,10 +57,10 @@ const Register = () => {
         setLoader(true)
         // 1. Upload image and get image url
         const image_url = await imageUpload(image)
-        console.log(image_url)
+        
         //2. User Registration
-        const result = await createUser(email, password)
-        console.log(result)
+         await createUser(email, password)
+        
         // 3. Save username and photo in firebase
         await updateUserProfile(name, image_url)
         .then(async()=>{
@@ -73,7 +74,6 @@ const Register = () => {
          await axiosPublic.post('/users',userInfo)
           .then(res=>{
             if (res.data.insertedId) {
-              console.log('user added to the database')
               reset();
               toast.success('Signup Successful')
               navigate(location?.state ? location.state : "/");
@@ -91,12 +91,15 @@ const Register = () => {
 
   return (
     <div className="my-20">
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
            <div className="flex w-full border my-20 max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg  lg:max-w-4xl">
           
       
-          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2 border">
               <div className="flex justify-center mx-auto">
-                  <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/GJg1fYZ/Brain-boost-removebg-preview.png" alt="" />
+                  <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/Z88qpcZ/MED-NUST-removebg-preview.png" alt="" />
               </div>
       
               <p className="mt-3 text-xl text-center ">

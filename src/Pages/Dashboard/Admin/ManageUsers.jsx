@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/LoadingSpiner";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 
 const ManageUsers = () => {
@@ -29,7 +30,6 @@ const ManageUsers = () => {
                 axiosSecure.patch(`/users/admin/${user._id}`, { role: newRole })
                     .then(res => {
                         refetch();
-                        console.log(res.data);
                         Swal.fire({
                             title: "Updated!",
                             text: "The user role has been updated.",
@@ -45,6 +45,9 @@ const ManageUsers = () => {
     if(isLoading) return <LoadingSpinner/>
     return (
         <div>
+          <Helmet>
+                <title>Manage users</title>
+            </Helmet>
             <div className="overflow-x-auto">
   <table className="table">
     {/* head */}
