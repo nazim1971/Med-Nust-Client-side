@@ -25,11 +25,14 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import PayManagement from "../Pages/Dashboard/Admin/PayManagement";
 import SalesReport from "../Pages/Dashboard/Admin/SalesReport";
 import SellerRoute from "./SellerRoute";
+import Error from "./Error";
+import HowItWorks from "../Pages/Home/Banner/HowItWorks";
 
 const routes = createBrowserRouter([
     {
       path: "/",
       element: <Root/>,
+      errorElement: <Error/>,
       children: [
         {
           path: '/',
@@ -46,6 +49,10 @@ const routes = createBrowserRouter([
        {
         path: '/login',
         element: <Login/>
+       },
+       {
+        path: '/howItWorks',
+        element: <HowItWorks/>
        },
        {
         path: '/register',

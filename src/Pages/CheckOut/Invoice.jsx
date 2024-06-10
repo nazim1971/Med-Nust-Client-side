@@ -1,38 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useEffect } from "react";
+
+
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InvoicePdf from '../../Pages/CheckOut/InvoicePdf';
+import { useLocation } from 'react-router-dom';
 
 const Invoice = () => {
-    const {user}  = useAuth()
-    const axiosSecure = useAxiosSecure()
-    const {
-        data: payment = [],
-        refetch,
-      } = useQuery({
-        queryKey: ["payments"],
-        queryFn: async () => {
-          const { data } = await axiosSecure(`/payments/${user.email}`);
-          return data;
-        },
-      });
-
-      useEffect(() => {
-        refetch(); // Fetch payment data once when the component mounts
-    }, []);
-
-
+  const location = useLocation();
+  const { payment } = location.state || {};
+ 
+  console.log(payment);
     return (
         <div>
-         <p>
-         Email: {payment.email}
-         </p>
-         <p>
-          TransactionId: {payment.
-transactionId}
-         </p>
+           <PDFDownloadLink
+              document={<InvoicePdf payment={payment} />}
+              fileName="sales_report.pdf"
+            >
+              {({ loading }) => (loading ? 'Preparing document...' : <button className='btn btn-warning'> Download Report </button>)}
+            </PDFDownloadLink>
 
-         
         </div>
     );
 };

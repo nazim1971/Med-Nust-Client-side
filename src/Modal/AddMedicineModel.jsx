@@ -80,11 +80,19 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
               <label className="block mb-2 text-sm font-medium ">
                 Company Name
               </label>
-              <input
-                {...register("company_name", { required: true })}
-                className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
-                type="text"
-              />
+              <select defaultValue={""} {...register("company_name",{required: true})} >
+              <option  value="" disabled>Select Company</option>
+              <option value="Incepta">Incepta</option>
+              <option value="Opsonin Pharma">Opsonin Pharma</option>
+              <option value="Square">Square</option>
+              <option value="Beximco pharma">Beximco pharma</option>
+              <option value="Renate limited">Renate limited</option>
+              <option value="SK-F">SK-F</option>
+              <option value="Populer">Populer</option>
+              <option value="Radiant">Radiant</option>
+              <option value="Healthcare">Healthcare</option>
+              </select>
+              
             </div>
             <div className="mt-4">
               <label className="block mb-2 text-sm font-medium ">

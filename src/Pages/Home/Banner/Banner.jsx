@@ -1,5 +1,7 @@
 import { Typewriter } from "react-simple-typewriter";
 import Slider from "./Slider";
+import { Link } from "react-router-dom";
+import { FaPlayCircle } from "react-icons/fa";
 
 const Banner = () => {
     return (
@@ -22,6 +24,20 @@ const Banner = () => {
                     <h1 className="lg:text-5xl md:text-4xl text-2xl text-orange-400 font-medium">Your Trusted Pharmacy Store</h1>
                     <p>Discover top-quality medicines and healthcare products at unbeatable prices. Your health, our priority every day.
                     </p>
+                    <Link to='/howItWorks' className="flex gap-2 btn  btn-ghost items-center">
+              {" "}
+              <FaPlayCircle className="text-xl text-orange-400" />
+              
+              <Typewriter
+              words={['how it works?']}
+              loop={true}
+              cursor
+              cursorStyle='_'
+              typeSpeed={100}
+              deleteSpeed={50}
+              delaySpeed={2000}
+              />
+            </Link>
                 </div>
                 <div className="md:w-2/4">
                     <Slider/>

@@ -44,8 +44,8 @@ const Slider = () => {
                 backgroundImage: `url(${i.image})`,
               }}
             >
-              <div className="p-5 text-[#a2a2a2] ">
-              <h3 className="font-bold"> {i.name} </h3>
+              <div className="p-5 text-[#747373b4] ">
+              <h3 className="font-bold underline decoration-red-500  "> {i.name} </h3>
               <h3 className=""> {i.description} </h3>
               </div>
             </div>

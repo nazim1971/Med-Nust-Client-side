@@ -87,7 +87,6 @@ const Shop = () => {
     try {
       // Await the axios POST request
       const response = await axiosPublic.post("/cart", medicineData);
-      console.log("Data successfully posted--== 2:", response.data);
       // Return the response data if the request is successful
       return response.data;
     } catch (error) {

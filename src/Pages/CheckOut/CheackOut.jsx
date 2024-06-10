@@ -8,6 +8,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Helmet } from "react-helmet";
 
 
+
+
 const CheackOut = () => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('')
@@ -95,7 +97,6 @@ const CheackOut = () => {
             console.log('confirm error')
         }
         else {
-            console.log('payment intent', paymentIntent)
             if (paymentIntent.status === 'succeeded') {
                 setTransactionId(paymentIntent.id);
 
@@ -114,13 +115,14 @@ const CheackOut = () => {
                 refetch();
                 if (res.data?.paymentResult?.insertedId) {
                     Swal.fire({
-                        position: "top-end",
+                        position: "center",
                         icon: "success",
-                        title: "Thank you for the taka paisa",
+                        title: "Payment successful",
                         showConfirmButton: false,
                         timer: 1500
                     });
-                   navigate('/invoice')
+                    localStorage.setItem('payment', payment);
+                    navigate(`/invoice`, { state: { payment } })
                 }
 
             }
@@ -154,6 +156,7 @@ const CheackOut = () => {
         </button>
         <p className="text-red-600">{error}</p>
         {transactionId && <p className="text-green-600"> Your transaction id: {transactionId}</p>}
+        
     </form>
     );
 };
