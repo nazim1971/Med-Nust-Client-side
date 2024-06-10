@@ -2,9 +2,12 @@ import { useForm } from "react-hook-form";
 import { imageUpload } from "../Hooks";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 
 const UpdateCategoryModal = ({refetch,id}) => {
+  const {loading, setLoader} = useAuth()
     const axiosSecure = useAxiosSecure();
     const { register, handleSubmit } = useForm();
     const onSubmit = async (data) => {
@@ -14,7 +17,9 @@ const UpdateCategoryModal = ({refetch,id}) => {
         let image_url = id.image || "" 
 
         if (image) { 
+          setLoader(true)
           image_url = await imageUpload(image);
+          setLoader(false)
          }
         
         const categoryInfo = {
@@ -70,7 +75,11 @@ const UpdateCategoryModal = ({refetch,id}) => {
                   type="submit"
                   className="w-full btn btn-primary px-6 py-3 text-sm font-medium tracking-wide  capitalize transition-colors duration-300 transform  rounded-lg  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
                 >
-                  Continue
+                  {
+                        loading ? <TbFidgetSpinner className="animate-spin m-auto" />
+                        :
+                        'Continue'
+                      }
                 </button>
               </div>
             </form>

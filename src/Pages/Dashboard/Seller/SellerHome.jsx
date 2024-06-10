@@ -73,18 +73,16 @@ const PayHistorySeller = () => {
       <Helmet>
                 <title>Seller Home</title>
             </Helmet>
-        <div className="stats shadow">
+        <div className="flex w-[85%] mt-10 shadow">
   
   <div className="stat place-items-center">
     <div className="stat-title">pending</div>
     <div className="stat-value">${totalPendingSales.toFixed(2)}</div>
-    <div className="stat-desc">From January 1st to February 1st</div>
   </div>
   
   <div className="stat place-items-center">
     <div className="stat-title">paid</div>
     <div className="stat-value text-secondary">${totalPaidSales.toFixed(2)}</div>
-    <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
   </div>
 
   

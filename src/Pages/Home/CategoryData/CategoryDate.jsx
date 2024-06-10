@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
@@ -20,6 +20,7 @@ const CategoryDate = () => {
     const [page, setPage] = useState(1);
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
 
     const { data: categoryData = [], isLoading, refetch: refetchCategoryData } = useQuery({
         queryKey: ['categoryData', page, sortOrder],
@@ -87,6 +88,7 @@ const CategoryDate = () => {
 
     //   add item to cart
     const handleAddToCart = async e => {
+        if (!user) return navigate("/login");
         // Check if the item is already in the cart
         const isAlreadyInCart = cart.some(cartItem => cartItem.name === e.name);
 

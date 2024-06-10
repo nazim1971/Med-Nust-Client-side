@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import axios from "axios";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://med-nust-server.vercel.app/'
+    baseURL: 'https://med-nust-server.vercel.app'
 })
 const useAxiosSecure = () => {
     const navigate = useNavigate();

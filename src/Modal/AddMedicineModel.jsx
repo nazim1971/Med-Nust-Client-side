@@ -3,9 +3,10 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { imageUpload } from "../Hooks";
 import toast from "react-hot-toast";
 import useAuth from "../Hooks/useAuth";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddMedicineModel = ({ refetch,categoryName }) => {
-    const {user} = useAuth()
+    const {user , loading, setLoader} = useAuth()
   const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, setError,clearErrors,formState: { errors } } = useForm();
   const onSubmit = async (data) => {
@@ -21,8 +22,10 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
       discount
     } = data;
     try {
+      setLoader(true)
       // 1. Upload image and get image url
       const image_url = await imageUpload(image);
+      setLoader(false)
       const categoryInfo = {
         category,
         name,
@@ -182,7 +185,11 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
                 type="submit"
                 className="w-full btn btn-primary px-6 py-3 text-sm font-medium tracking-wide  capitalize transition-colors duration-300 transform  rounded-lg  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
               >
-                Continue
+                {
+                        loading ? <TbFidgetSpinner className="animate-spin m-auto" />
+                        :
+                        'Continue'
+                      }
               </button>
             </div>
           </form>

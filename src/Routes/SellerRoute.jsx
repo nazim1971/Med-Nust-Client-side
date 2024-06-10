@@ -7,7 +7,7 @@ const SellerRoute = ({children}) => {
 
   if (isLoading) return <LoadingSpinner />
   if (role === 'seller') return children
-  console.log(role);
+
   return <Navigate to='/dashboard' />
 };
 
