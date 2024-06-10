@@ -40,10 +40,6 @@ const Navber = () => {
         </li>
       )}
       <hr className="lg:hidden flex" />
-      <li>
-        <NavLink to="/addProduct">languages </NavLink>
-      </li>
-      
       <li className="hidden lg:block">
         <ReactClock />
       </li>

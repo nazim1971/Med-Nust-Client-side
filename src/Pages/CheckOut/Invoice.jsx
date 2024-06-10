@@ -8,7 +8,7 @@ const Invoice = () => {
   const location = useLocation();
   const { payment } = location.state || {};
  
-  console.log(payment);
+
     return (
         <div>
            <PDFDownloadLink

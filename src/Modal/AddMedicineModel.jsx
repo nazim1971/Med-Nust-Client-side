@@ -7,7 +7,7 @@ import useAuth from "../Hooks/useAuth";
 const AddMedicineModel = ({ refetch,categoryName }) => {
     const {user} = useAuth()
   const axiosSecure = useAxiosSecure();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setError,clearErrors,formState: { errors } } = useForm();
   const onSubmit = async (data) => {
     const image = data.image[0];
     const {
@@ -35,6 +35,13 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
         image: image_url,
         sellerEmail: user?.email
       };
+      if (discount > 100) {
+        setError("discount", {
+          type: "manual",
+          message: "Discount cannot be more than 100",
+        });
+        return;
+      }
       await axiosSecure.post("/addMed", categoryInfo).then((res) => {
         if (res.data.insertedId) {
           refetch();
@@ -46,6 +53,8 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
       toast.error(err.message);
     }
   };
+
+  
 
   return (
     <>
@@ -140,10 +149,19 @@ const AddMedicineModel = ({ refetch,categoryName }) => {
               </label>
               <input
                 defaultValue={0}
-                {...register("discount", { required: true })}
-                className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
+                {...register("discount", { 
+                  required: true,
+                  validate: value => value <= 100 || "Discount cannot be more than 100"
+                })}
+                className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                 type="number"
+                onChange={() => clearErrors("discount")}
               />
+              {errors.discount && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.discount.message}
+                </p>
+              )}
             </div>
 
             <div className="mt-4">

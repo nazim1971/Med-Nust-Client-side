@@ -12,10 +12,16 @@ import { useEffect } from "react";
 
 const Category = () => {
 
-   
     
     const axiosPublic = useAxiosPublic()
 
+    const { data: disProducts = [] } = useQuery({
+      queryKey: ["disProduct"],
+      queryFn: async () => {
+        const { data } = await axiosPublic(`/disMedicines`);
+        return data;
+      },
+    });
 
     useEffect(()=>{
         Aos.init()
@@ -30,7 +36,12 @@ const Category = () => {
     })
 
     if(isLoading) return <LoadingSpinner/>
-
+    const categoryWithItemCount = categoryName.map((category) => {
+      const itemCount = disProducts.filter(
+        (product) => product.category === category.category
+      ).length;
+      return { ...category, itemCount };
+    });
    
     return (
         <div>
@@ -38,11 +49,11 @@ const Category = () => {
 
             <div className="grid md:grid-cols-2  lg:grid-cols-3 gap-10 ">
                 {
-                    categoryName.map(i=> <div key={i._id} data-aos-delay="300"  data-aos-duration="600" data-aos="fade-right" className="card  bg-base-100 shadow-xl">
+                    categoryWithItemCount.map(i=> <div key={i._id} data-aos-delay="300"  data-aos-duration="600" data-aos="fade-right" className="card  bg-base-100 shadow-xl">
                     <figure><img className="h-72 w-full" src={i.image} alt="category" /></figure>
                     <div className="p-5">
                       <h2 className="card-title">{i.category} </h2>
-                      <p className="flex gap-3 items-center"> <BsCapsule className="text-orange-400"/> {i.category.length} </p>
+                      <p className="flex gap-3 items-center"> <BsCapsule className="text-orange-400"/> {i.itemCount} </p>
                       <div className="card-actions justify-end">
                         <Link to={`categoryData/${i.category}`} className="btn bg-orange-400 text-white">View All</Link>
                       </div>

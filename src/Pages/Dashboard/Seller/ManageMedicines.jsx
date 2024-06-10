@@ -5,16 +5,13 @@ import AddMedicineModel from "../../../Modal/AddMedicineModel";
 import LoadingSpinner from "../../../components/LoadingSpiner";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { Helmet } from "react-helmet";
-// import { MdUpdate } from "react-icons/md";
-// import UpdateMedicineModal from "../../../Modal/UpdateMedicineModal";
-// import { useEffect, useState } from "react";
-
+import { FiDelete } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const ManageMedicines = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
-    // const [id, setId]  = useState('')
     const {data: manageMedicine =[], isLoading,refetch} = useQuery({
         queryKey: ['manageMedicine'],
         queryFn: async ()=>{
@@ -23,8 +20,6 @@ const ManageMedicines = () => {
         }
     })
  
-
-
    
     const {data: categoryName=[]} = useQuery({
         queryKey: ['categoryName'],
@@ -38,13 +33,35 @@ const ManageMedicines = () => {
     const handleShowModal = () => {
         document.getElementById('my_modal_1').showModal();
       };
-    // const handleShowUpdate = (id) => {
-        
-    //     setId(id)
-    //     refetch()
-    //     document.getElementById('my_modal_2').showModal();
-    //   };
 
+
+    const handleDelete = async  e =>{
+      try {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+             await axiosSecure.delete(`/sellerMedicine/${e}`);
+            
+  
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your Medicine has been deleted.",
+              icon: "success",
+            });
+          }
+          refetch();
+        });
+      } catch (error) {
+        console.error("There was an error deleting the item!", error);
+      }
+    }
 
       if(isLoading)return <LoadingSpinner/>
     return (
@@ -64,7 +81,7 @@ const ManageMedicines = () => {
               <th>Name</th>
               <th>Company Name</th>
               <th>Description</th>
-              <th>Update</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -73,9 +90,8 @@ const ManageMedicines = () => {
                 <th> {idx+1} </th>
                 <td> {i.name} </td>
                 <td>{i.company_name}  </td>
-                <td> {i.description} </td>
-                {/* <td> <MdUpdate onClick={() => handleShowUpdate(i._id)} className="text-2xl"/> </td> */}
-                 
+                <td> {i.description.slice(0,30)}... </td>
+                 <td> <FiDelete onClick={()=> handleDelete(i._id)}  className="text-xl" /> </td>
               </tr>
               
             ))}
@@ -83,7 +99,6 @@ const ManageMedicines = () => {
         </table>
       </div>
       <AddMedicineModel refetch={refetch} categoryName={categoryName}/>
-      {/* <UpdateMedicineModal refetch={refetch} categoryName={categoryName} id={id} /> */}
         </div>
     );
 };

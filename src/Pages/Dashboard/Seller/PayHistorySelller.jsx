@@ -69,7 +69,7 @@ const PayHistorySeller = () => {
                     <>
                       <th rowSpan={payment.medicines.length}>{index + 1}</th>
                       <td rowSpan={payment.medicines.length}>{payment.email}</td>
-                      <td   rowSpan={payment.medicines.length}> <span className={`p-1 rounded-xl ${payment.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` }>{payment.status}</span> </td>
+                      <td   rowSpan={payment.medicines.length}> <span className={`p-1 rounded-xl text-white btn-sm btn ${payment.status === 'paid'? ' bg-green-600' : 'bg-red-400 '}` }>{payment.status}</span> </td>
                     </>
                   )}
                   <td>{medicine.name}</td>

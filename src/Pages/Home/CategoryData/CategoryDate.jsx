@@ -68,7 +68,6 @@ const CategoryDate = () => {
     const postMedicineData = async (medicineData) => {
         try {
             const response = await axiosPublic.post('/cart', medicineData);
-            console.log('Data successfully posted--== 2:', response.data);
             return response.data;
         } catch (error) {
             console.error('Error posting data:', error.response ? error.response.data : error.message);

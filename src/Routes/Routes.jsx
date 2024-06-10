@@ -3,7 +3,6 @@ import Root from "../Layout/Root";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Sign-Up/Register";
-import AddProduct from "../Pages/Home/Navber/AddProduct";
 import Private from "./Private";
 import UpdateProfile from "../Pages/Home/UpdateProfile/UpdateProfile";
 import CategoryDate from "../Pages/Home/CategoryData/CategoryDate";
@@ -57,10 +56,6 @@ const routes = createBrowserRouter([
        {
         path: '/register',
         element: <Register/>
-       },
-       {
-        path: '/addProduct',
-        element: <AddProduct/>
        },
        {
         path: '/updateProfile',
