@@ -3,7 +3,7 @@
 **Admin User and Password**:  
 **User**: admin@admin.com  
 **Pass**: adminA
-
+**Server Repo**: [Server](https://github.com/nazim1971/Med-Nust-Server-Side)
 Explore the platform: [Mednust Live Site](https://med-nust.web.app)
 
 **Mednust** is a multi-vendor e-commerce platform specialized in medicine-related products. This platform provides a seamless experience for users, sellers, and administrators through dedicated dashboards and a variety of features.
